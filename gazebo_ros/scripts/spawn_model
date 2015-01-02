@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #
 # Copyright 2013 Open Source Robotics Foundation
 #
@@ -36,7 +36,7 @@ model_database_template = """<sdf version="1.4">
       <uri>model://MODEL_NAME</uri>
     </include>
   </world>
-</sdf>"""        
+</sdf>"""
 
 def usage():
     print '''Commands:
@@ -190,7 +190,7 @@ class SpawnModel():
     # Generate a blank SDF file with an include for the model from the model database
     def createDatabaseCode(self, database_name):
         return model_database_template.replace("MODEL_NAME", database_name);
-    
+
     def callSpawnService(self):
 
         # wait for model to exist
@@ -255,10 +255,10 @@ class SpawnModel():
 
         # spawn model
         if self.urdf_format:
-          success = gazebo_interface.spawn_urdf_model_client(self.model_name, model_xml, self.robot_namespace, 
+          success = gazebo_interface.spawn_urdf_model_client(self.model_name, model_xml, self.robot_namespace,
                                                              initial_pose, self.reference_frame, self.gazebo_namespace)
         elif self.sdf_format:
-          success = gazebo_interface.spawn_sdf_model_client(self.model_name, model_xml, self.robot_namespace, 
+          success = gazebo_interface.spawn_sdf_model_client(self.model_name, model_xml, self.robot_namespace,
                                                             initial_pose, self.reference_frame, self.gazebo_namespace)
         else:
           print "Error: should not be here in spawner helper script, there is a bug"
@@ -267,7 +267,7 @@ class SpawnModel():
         # set model configuration before unpause if user requested
         if len(self.joint_names) != 0:
           try:
-            success = gazebo_interface.set_model_configuration_client(self.model_name, self.param_name, 
+            success = gazebo_interface.set_model_configuration_client(self.model_name, self.param_name,
                                                                       self.joint_names, self.joint_positions, self.gazebo_namespace)
           except rospy.ServiceException, e:
             print "set model configuration service call failed: %s"%e
